@@ -1,10 +1,13 @@
-class SearchController < ApplicationController
+class SearchesController < ApplicationController
+    before_action :authenticate_user!
+    
     def search
-      @model = params["search"]["model"]
-      @value = params["search"]["value"]
-      @how = params["search"]["how"]
-      @datas = search_for(@how, @model, @value)      
-    end　　　　　　　　　　　　　　　　　　　　　　　　 
+      @model = params["model"]
+      @value = params["value"]
+      @how = params["how"]
+      @datas = search_for(@how, @model, @value)
+      redirect_to search_path
+    end
   
     private
   
@@ -51,6 +54,5 @@ class SearchController < ApplicationController
       when 'partical'
         partical(model, value)
       end
-    end
     end
 end
