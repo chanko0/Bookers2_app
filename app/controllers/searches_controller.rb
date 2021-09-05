@@ -2,18 +2,17 @@ class SearchesController < ApplicationController
     before_action :authenticate_user!
     
     def search
-      @model = params["model"]
-      @value = params["value"]
-      @how = params["how"]
+      @model = params["search"] ["model"]
+      @value = params["search"] ["value"]
+      @how = params["search"]["how"]
       @datas = search_for(@how, @model, @value)
-      redirect_to search_path
     end
   
     private
   
-    def match(model, value)                     
-      if model == 'user'                       
-        User.where(name: value)                 
+    def match(model, value)
+      if model == 'user'         
+        User.where(name: value)
       elsif model == 'book'
         Book.where(title: value)
       end
@@ -46,8 +45,8 @@ class SearchesController < ApplicationController
     def search_for(how, model, value)
       case how
       when 'match'
-        match(model, value)                 
-      when 'forward'                        
+        match(model, value)
+      when 'forward'
         forward(model, value)
       when 'backward'
         backward(model, value)
